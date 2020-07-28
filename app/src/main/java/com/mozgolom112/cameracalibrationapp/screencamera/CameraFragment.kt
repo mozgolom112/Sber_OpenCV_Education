@@ -1,4 +1,4 @@
-package com.mozgolom112.cameracalibrationapp
+package com.mozgolom112.cameracalibrationapp.screencamera
 
 import android.Manifest
 import android.content.pm.PackageManager
@@ -6,31 +6,35 @@ import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.widget.Toast
-import androidx.core.graphics.scaleMatrix
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import com.mozgolom112.cameracalibrationapp.R
+import com.mozgolom112.cameracalibrationapp.models.CalibrationData
 import kotlinx.android.synthetic.main.fragment_camera.*
-import org.opencv.android.OpenCVLoader
+import androidx.navigation.findNavController
 
-private val TAG = "MainActivity"
 private val CAMERA_PERMISSION_REQUEST = 1
 
 class CameraFragment() : Fragment(R.layout.fragment_camera){
 
+    private val camera: CameraViewModel by lazy { CameraViewModel() }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.i(TAG, "called onCreate")
 
         // Permissions for Android 6+
         requestPermissions(
             arrayOf(Manifest.permission.CAMERA),
-            CAMERA_PERMISSION_REQUEST)
+            CAMERA_PERMISSION_REQUEST
+        )
 
-
+        setObservers()
+        setOnClickListeners()
 
         javacamvCamera.apply {
             visibility = SurfaceView.VISIBLE
             //What do with each frame
-            setCvCameraViewListener(CvCameraViewListener2)
+            setCvCameraViewListener(camera)
         }
     }
 
@@ -61,27 +65,33 @@ class CameraFragment() : Fragment(R.layout.fragment_camera){
                     javacamvCamera.setCameraPermissionGranted()
                 } else {
                     val message = "Camera permission was not granted"
-                    Log.e(TAG, message)
+                    Log.e("CameraFragment", message)
                     Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show()
                 }
             }
             else -> {
-                Log.e(TAG, "Unexpected permission request")
+                Log.e("CameraFragment", "Unexpected permission request")
             }
         }
     }
 
-    init {
-        initOpenCv()
+
+    private fun setObservers() {
+        //TODO("Not yet implemented")
     }
 
-    private fun initOpenCv(){
-        val isLoadOpenCVSuccess = OpenCVLoader.initDebug()
-        if(isLoadOpenCVSuccess) initMyNativeLib()
-        Log.d(TAG, "isLoadOpenCVSuccess: $isLoadOpenCVSuccess")
+    private fun setOnClickListeners() {
+        btnMakeSnapshot.setOnClickListener {
+            camera.takeSnapshotClick = true
+        }
+        btnCalibrate.setOnClickListener {
+           val result = camera.calibrateCameraClick()
+            navigateToCalibrationFrag(result)
+        }
     }
 
-    private fun initMyNativeLib(){
-        System.loadLibrary("native-lib")
+    private fun navigateToCalibrationFrag(result: CalibrationData) {
+        findNavController().navigate(CameraFragmentDirections.actionCameraToCalibrationResult(result))
     }
+
 }
