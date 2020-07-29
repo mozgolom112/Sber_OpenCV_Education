@@ -10,7 +10,7 @@ using namespace std;
 using namespace cv;
 
 //Создаем глобальную переменную
-CameraCalibration cameraCalibration;
+CameraCalibration cameraCalibration = CameraCalibration();
 
 extern "C" JNIEXPORT void JNICALL
 Java_com_mozgolom112_cameracalibrationapp_CvCameraViewListener2_adaptiveThresholdFromJNI(
@@ -54,16 +54,16 @@ Java_com_mozgolom112_cameracalibrationapp_screencamera_CameraViewModel_identifyC
     __android_log_print(ANDROID_LOG_INFO, TAG, "Insize identifyChessboard\n");
 
     return cameraCalibration.identifyChessboard(frame,
-                                                reinterpret_cast<bool &>(take_snapshot_click));
+                                               reinterpret_cast<bool &>(take_snapshot_click));
 }extern "C"
 JNIEXPORT void JNICALL
 Java_com_mozgolom112_cameracalibrationapp_screencamera_CameraViewModel_calibrate(JNIEnv *env,
                                                                                  jobject thiz,
                                                                                  jlong matrix_mat_addr,
                                                                                  jlong dist_mat_addr) {
+
     Mat &matrix = *(Mat *) matrix_mat_addr;
     Mat &dist = *(Mat *) dist_mat_addr;
-
     vector<Mat> result = cameraCalibration.calibrate();
     matrix = result[0];
     dist = result[1];

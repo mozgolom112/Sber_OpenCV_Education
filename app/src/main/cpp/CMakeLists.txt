@@ -7,7 +7,7 @@ add_library( lib_opencv SHARED IMPORTED )
 set_target_properties(lib_opencv PROPERTIES IMPORTED_LOCATION ${OpenCV_DIR}/libs/${ANDROID_ABI}/libopencv_java4.so)
 
 #Add Your Native Lib
-add_library(native-lib SHARED native-lib.cpp)
+add_library(native-lib SHARED native-lib.cpp camera_calibration.cpp)
 add_library(camera-calibration SHARED camera_calibration.cpp)
 
 #Add&Link Android Native Log lib with others libs
