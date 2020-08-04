@@ -167,6 +167,6 @@ If few screenshots are taken, then there will be defects:
 
 An example when many screenshots are taken:
 
-<img src="https://raw.githubusercontent.com/mozgolom112/Sber_OpenCV_Education/exercise-1-cam-calibration/readme_media/undistort_pict1_real_good.png" width="400" height="790">
+<img class="center-pic" src="https://raw.githubusercontent.com/mozgolom112/Sber_OpenCV_Education/exercise-1-cam-calibration/readme_media/undistort_pict1_real_good.png" width="400" height="790">
 
-<img src="https://raw.githubusercontent.com/mozgolom112/Sber_OpenCV_Education/exercise-1-cam-calibration/readme_media/undistort_pict2_real_good.png" width="400" height="790">
+<img class="center-pic" src="https://raw.githubusercontent.com/mozgolom112/Sber_OpenCV_Education/exercise-1-cam-calibration/readme_media/undistort_pict2_real_good.png" width="400" height="790">
