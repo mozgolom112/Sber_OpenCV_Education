@@ -11,6 +11,7 @@ This application is designed to calibrate the main camera of the phone using the
 - Using JNI
 - Changing OpenCV class to fix camera orientation issue
 - Results
+- From Russian With Love
 
 # Getting started:
 This application uses [OpenCV library for Android](https://sourceforge.net/projects/opencvlibrary/files/4.4.0/opencv-4.4.0-android-sdk.zip/download). You can download it along with the project, or connect it yourself. If you will install the OpenCV library yourself, then make sure that you:
@@ -167,6 +168,174 @@ If few screenshots are taken, then there will be defects:
 
 An example when many screenshots are taken:
 
-<img class="center-pic" src="https://raw.githubusercontent.com/mozgolom112/Sber_OpenCV_Education/exercise-1-cam-calibration/readme_media/undistort_pict1_real_good.png" width="400" height="790">
+<img src="https://raw.githubusercontent.com/mozgolom112/Sber_OpenCV_Education/exercise-1-cam-calibration/readme_media/undistort_pict1_real_good.png" width="400" height="790">
 
-<img class="center-pic" src="https://raw.githubusercontent.com/mozgolom112/Sber_OpenCV_Education/exercise-1-cam-calibration/readme_media/undistort_pict2_real_good.png" width="400" height="790">
+<img src="https://raw.githubusercontent.com/mozgolom112/Sber_OpenCV_Education/exercise-1-cam-calibration/readme_media/undistort_pict2_real_good.png" width="400" height="790">
+
+# *From Russia With Love*
+
+<iframe frameborder="0" style="border:none;width:100%;height:100px;" width="100%" height="100" src="https://music.yandex.ru/iframe/#track/38844178/168816">Слушайте <a href='https://music.yandex.ru/album/168816/track/38844178'>Англо-русский словарь</a> — <a href='https://music.yandex.ru/artist/161243'>Сплин</a> на Яндекс.Музыке</iframe>
+
+# Андроид приложение для калибровки камеры
+Это приложение предназначено для калибровки основной камеры телефона по шахматной доске. Оно позволяет:
+- Откалибровать камеру (только внутренние параметры камеры и коэффициенты дисторсии);
+- Показать результат применения калибровки в виде обработки входного видеопотока;
+- Показать матрицы калибровки.
+
+# Обзор:
+- Приступая к работе.
+- Теория калибровки камеры и ее основные параметры.
+- Использование OpenCV
+- Использование JNI
+- Изменение OpenCV класса для устранения проблемы с ориентацией камеры
+- Результаты
+
+# Приступая к работе
+В данном приложении используется [OpenCV библиотека под Андроид](https://sourceforge.net/projects/opencvlibrary/files/4.4.0/opencv-4.4.0-android-sdk.zip/download). Вы можете ее скачать вместе с проектом, либо подключить ее самостоятельно. Если вы будете сами устанавливать OpenCV библиотеку, то убедитесь, что вы:
+1.	Поставили версию 4.4.0
+2.	Заменили файл “opencv/java/src/org/opencv/android/CameraBridgeViewBase.java” на измененный [файл из репозитория](https://github.com/mozgolom112/Sber_OpenCV_Education/blob/exercise-1-cam-calibration/opencv/java/src/org/opencv/android/CameraBridgeViewBase.java)
+3.	В файле [build.gradle] на уровне app прописали правильно строчку:
+a.	Для Windows систем:
+`arguments "-DOpenCV_DIR=" + rootProject.projectDir.path + "/opencv/native"`
+b.	Для Linux систем:
+`arguments "-DOpenCV_DIR=\" + rootProject.projectDir.path + "/opencv/native"`
+
+Для работы C++ кода будет использоваться JNI. Убедитесь, что в вашей IDE установлены [NDK, CMake and LLDB](https://developer.android.com/studio/projects/install-ndk)
+
+# Теория калибровки камеры.
+Калибровка камеры необходимо для того чтобы получить полную информацию (технические характеристики или расчетные коэффициенты) о камере, которая необходима для определения точной взаимосвязи между 3D‑точкой в реальном мире и соответствующим 2D‑изображением, проекцией (каждым пикселем) на изображении, снятом откалиброванной камерой.
+Обычно для этого необходимо получить два вида параметров: **внешние**, которые определяют смещение камеры относительно некоторой мировой системы координат и **внутренние**, по средствам которых происходит проецирование точки на плоскость изображения.
+
+![extrinsic_param_math.png](https://raw.githubusercontent.com/mozgolom112/Sber_OpenCV_Education/exercise-1-cam-calibration/readme_media/extrinsic_param_math.png)
+где R - матрица вращения и t – вектор перемещения. Они образуют группу внешних параметров.
+
+![intristic_param_math.png](https://raw.githubusercontent.com/mozgolom112/Sber_OpenCV_Education/exercise-1-cam-calibration/readme_media/intristic_param_math.png)
+![intristic_matrix_math.png](https://raw.githubusercontent.com/mozgolom112/Sber_OpenCV_Education/exercise-1-cam-calibration/readme_media/intristic_matrix_math.png)
+где K – матрица внутренних параметров камеры,
+-	Fx и Fy - фокусные расстояния (обычно одинаковые)
+-	Cx и Сy - оптический центр
+-	Гамма - перекос между осями x и y датчика камеры. (обычно 0)
+Картинка снизу для понимания.
+
+![illustration_of_coordinate_pict_rus.png](https://raw.githubusercontent.com/mozgolom112/Sber_OpenCV_Education/exercise-1-cam-calibration/readme_media/illustration_of_coordinate_pict_rus.png)
+
+Реальные же линзы обычно имеют некоторые искажения, в основном радиальные искажения и небольшие тангенциальные искажения. Поэтому расширим вышеприведенную модель:
+
+![dist_param_math.png](https://raw.githubusercontent.com/mozgolom112/Sber_OpenCV_Education/exercise-1-cam-calibration/readme_media/dist_param_math.png)
+где k_1, k_2, k_3, k_4, k_5, и k_6 коэффициенты радиального искажения. p_1 и p_2 - тангенциальные коэффициенты. Коэффициенты высшего порядка не рассматриваются в OpenCV.
+
+# Использование OpenCV
+Благодаря библиотеки OpenCV мы можем упростить себе жизнь, так как функции поиска шаблона шахматной доски, калибровки, получения неискажённого изображения и другие – уже есть в ней.
+Основная идея заключается в том, чтобы получить несколько кадров с различных ракурсов, а также на различном расстоянии, на котором распознан шаблон шахматной доски и на основе данных о распознавании и кадра определить внутренние параметры камеры и коэффициенты искажения. И потом применить их для получения кадра без искажения.
+В данном проекте используются следующие OpenCV-функции:
+> [calibrateCamera](https://docs.opencv.org/2.4/modules/calib3d/doc/camera_calibration_and_3d_reconstruction.html#calibratecamera)(object_points, image_points, image_size, camera_matrix, dist_coeffs, r_vecs, t_vecs)
+
+Находит внутренние и внешние параметры камеры по нескольким представлениям калибровочного шаблона, в нашем случае шахматной доски.
+
+> [findChessboardCorners](https://docs.opencv.org/2.4/modules/calib3d/doc/camera_calibration_and_3d_reconstruction.html#findchessboardcorners)(gray_frame, board_size, detected_corners, CALIB_CB_ADAPTIVE_THRESH + CALIB_CB_NORMALIZE_IMAGE + CALIB_CB_FAST_CHECK)
+
+Находит позиции внутренних углов шахматной доски. Возвращает true, если углы были найдены. На вход необходимо передать размер вашей шахматной доски.
+
+> [cornerSubPix](https://docs.opencv.org/2.4/modules/imgproc/doc/feature_detection.html#cornersubpix)(gray_frame, detected_corners, Size(11, 11), Size(-1,-1), TermCriteria( TermCriteria::EPS+TermCriteria::COUNT, 30, 0.0001))
+
+Уточняет позиции угловых точек.
+
+> [drawChessboardCorners](https://docs.opencv.org/2.4/modules/calib3d/doc/camera_calibration_and_3d_reconstruction.html#drawchessboardcorners)(frame, board_size, Mat(detected_corners), pattern_found);
+
+Визуализирует обнаруженные углы шахматной доски.
+
+> [undistort](https://docs.opencv.org/2.4/modules/imgproc/doc/geometric_transformations.html#undistort)(temp, frame, matrix, dist)
+
+Преобразует изображение для компенсации искажения объектива.
+
+# Использование JNI
+Так как функции написаны на C++, а UI логика приложения на Kotlin, то нам нужен механизм для запуска такого кода из Kotlin. Для этого мы будем использовать **Java Native Interface**.
+##### CMakeLists
+
+[Файл](https://github.com/mozgolom112/Sber_OpenCV_Education/blob/exercise-1-cam-calibration/app/src/main/cpp/CMakeLists.txt) содержит в себе информацию, нужная для сборки CMake. Если вы хотите использовать свои .cpp файлы в native-lib, добавьте их в строчку add_library для native-lib:
+`add_library(native-lib SHARED native-lib.cpp YOUR_LIBRARY.cpp)`
+
+  ##### Native-lib
+ Для того, чтобы мы могли использовать наш код, нам необходимо создать специальную библиотеку native-lib – в котором будет написан C++ код. В обязательном порядке необходимо добавить jni.h и определить тег:
+
+`#include <jni.h>`
+`#define TAG "NativeLib"`
+
+Если нужно использовать свои библиотеки, не забудьте их включить в [CMakeLists](https://github.com/mozgolom112/Sber_OpenCV_Education/blob/exercise-1-cam-calibration/app/src/main/cpp/CMakeLists.txt) и включить их в native-lib, используя директиву [#include](https://docs.microsoft.com/ru-ru/cpp/preprocessor/hash-include-directive-c-cpp?view=vs-2019)
+Теперь вам нужно описать функции придерживаясь следующего шаблона:
+```
+extern "C"
+JNIEXPORT void JNICALL
+Java_package_name_*Class_name*_*fun_name(JNIEnv *env, //ваши параметры …
+){
+    //Полезный код
+}
+```
+Помните, что нельзя передавать все что вам вздумается. [Все типы данных здесь](https://docs.oracle.com/javase/7/docs/technotes/guides/jni/spec/types.html). Для того чтобы избежать этой проблемы – передавайте ссылки на значения. В Kotlin файлах это выглядит так:
+```
+val frame = inputFrame.rgba() // Тип Mat
+val frameAddr = frame.nativeObjAddr //take address of frame
+```
+В native-lib мы получаем объект через указатель:
+```
+Mat &frame = *(Mat *) frame_addr;
+```
+Пример из проекта:
+```
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_mozgolom112_cameracalibrationapp_screenundistort_UndistortCameraViewModel_undistort(
+        JNIEnv *env, jobject thiz, jlong frame_addr, jlong matrix_addr, jlong dist_addr) {
+    Mat &frame = *(Mat *) frame_addr;
+    Mat &matrix = *(Mat *) matrix_addr;
+    Mat &dist = *(Mat *) dist_addr;
+
+    cameraCalibration.undistortImage(frame, matrix, dist);
+}
+```
+
+ #### Kotlin
+
+Для того чтобы мы могли вызвать из .kt файла, нужно указать ту же функцию с той же сигнатурой, что определена в native-lib c модификатором **external**:
+`external fun undistort(frameAddr: Long, matrixAddr: Long, distAddr: Long)`
+
+Помните, что мы не можем прокинуть в native-lib любой тип, кроме этого [списка](https://docs.oracle.com/javase/7/docs/technotes/guides/jni/spec/types.html)
+
+# Изменение OpenCV класса для устранения проблемы с ориентацией камеры
+
+К сожалению, OpenCV камера не переводит камеру в портретный режим по умолчанию. Для того, чтобы исправить проблему с ориентацией нужно изменить в файле [CameraBridgeViewBase.java](https://github.com/mozgolom112/Sber_OpenCV_Education/blob/exercise-1-cam-calibration/opencv/java/src/org/opencv/android/CameraBridgeViewBase.java) функцию deliverAndDrawFrame
+Описание действий прописаны [здесь](https://heartbeat.fritz.ai/working-with-the-opencv-camera-for-android-rotating-orienting-and-scaling-c7006c3e1916)
+
+# Результаты
+Виртуальное устройство Pixel 3:
+Определение углов:
+<img src="https://raw.githubusercontent.com/mozgolom112/Sber_OpenCV_Education/exercise-1-cam-calibration/readme_media/detection_chessboard_pict1.png" width="400" height="790">
+
+<img src="https://raw.githubusercontent.com/mozgolom112/Sber_OpenCV_Education/exercise-1-cam-calibration/readme_media/detection_chessboard_pict2.png" width="400" height="790">
+Внутренние параметры и коэффициенты дисторсии:
+
+<img src="https://raw.githubusercontent.com/mozgolom112/Sber_OpenCV_Education/exercise-1-cam-calibration/readme_media/screen_param_pict.png" width="400" height="790">
+Поправка с учетом коэффициенты дисторсии:
+
+<img src="https://raw.githubusercontent.com/mozgolom112/Sber_OpenCV_Education/exercise-1-cam-calibration/readme_media/undistort_pict1.png" width="400" height="790">
+
+<img src="https://raw.githubusercontent.com/mozgolom112/Sber_OpenCV_Education/exercise-1-cam-calibration/readme_media/undistort_pict2.png" width="400" height="790">
+### Real Phone HMD Global Nokia 6.1 (API 29):
+Определение углов:
+
+<img src="https://raw.githubusercontent.com/mozgolom112/Sber_OpenCV_Education/exercise-1-cam-calibration/readme_media/detection_chessboard_pict1_real_phone.png" width="400" height="790">
+
+<img src="https://raw.githubusercontent.com/mozgolom112/Sber_OpenCV_Education/exercise-1-cam-calibration/readme_media/detection_chessboard_pict2_real_phone.png" width="400" height="790">
+Внутренние параметры и коэффициенты дисторсии:
+
+<img src="https://raw.githubusercontent.com/mozgolom112/Sber_OpenCV_Education/exercise-1-cam-calibration/readme_media/screen_param_pict_real_phone.png" width="400" height="790">
+
+Если будет мало сделано скриншотов, то на изображении по углам будут дефекты
+
+<img src="https://raw.githubusercontent.com/mozgolom112/Sber_OpenCV_Education/exercise-1-cam-calibration/readme_media/undistort_pict1_real_bad.png" width="400" height="790">
+
+Пример, когда сделано много различных фотографий:
+
+<img src="https://raw.githubusercontent.com/mozgolom112/Sber_OpenCV_Education/exercise-1-cam-calibration/readme_media/undistort_pict1_real_good.png" width="400" height="790">
+
+<img src="https://raw.githubusercontent.com/mozgolom112/Sber_OpenCV_Education/exercise-1-cam-calibration/readme_media/undistort_pict2_real_good.png" width="400" height="790">
