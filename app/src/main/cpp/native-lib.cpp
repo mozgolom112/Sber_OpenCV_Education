@@ -9,25 +9,7 @@
 using namespace std;
 using namespace cv;
 
-//Создаем глобальную переменную
 CameraCalibration cameraCalibration = CameraCalibration();
-
-extern "C" JNIEXPORT void JNICALL
-Java_com_mozgolom112_cameracalibrationapp_CvCameraViewListener2_adaptiveThresholdFromJNI(
-        JNIEnv *env, jobject instance, jlong matAddr) {
-   //Example
-    // get Mat from raw address
-    Mat &mat = *(Mat *) matAddr;
-
-    clock_t begin = clock();
-
-    cv::adaptiveThreshold(mat, mat, 255, ADAPTIVE_THRESH_MEAN_C, THRESH_BINARY_INV, 21, 5);
-
-    // log computation time to Android Logcat
-    double totalTime = double(clock() - begin) / CLOCKS_PER_SEC;
-    __android_log_print(ANDROID_LOG_INFO, TAG, "adaptiveThreshold computation time = %f seconds\n",
-                        totalTime);
-}
 
 extern "C" JNIEXPORT void JNICALL
 Java_com_mozgolom112_cameracalibrationapp_screencamera_CameraViewModel_setSizes(JNIEnv *env,
@@ -54,8 +36,9 @@ Java_com_mozgolom112_cameracalibrationapp_screencamera_CameraViewModel_identifyC
     __android_log_print(ANDROID_LOG_INFO, TAG, "Insize identifyChessboard\n");
 
     return cameraCalibration.identifyChessboard(frame,
-                                               reinterpret_cast<bool &>(take_snapshot_click));
-}extern "C"
+                                                reinterpret_cast<bool &>(take_snapshot_click));
+}
+extern "C"
 JNIEXPORT void JNICALL
 Java_com_mozgolom112_cameracalibrationapp_screencamera_CameraViewModel_calibrate(JNIEnv *env,
                                                                                  jobject thiz,
@@ -67,7 +50,8 @@ Java_com_mozgolom112_cameracalibrationapp_screencamera_CameraViewModel_calibrate
     vector<Mat> result = cameraCalibration.calibrate();
     matrix = result[0];
     dist = result[1];
-}extern "C"
+}
+extern "C"
 JNIEXPORT void JNICALL
 Java_com_mozgolom112_cameracalibrationapp_screenundistort_UndistortCameraViewModel_undistort(
         JNIEnv *env, jobject thiz, jlong frame_addr, jlong matrix_addr, jlong dist_addr) {

@@ -11,7 +11,6 @@ import androidx.navigation.fragment.findNavController
 import com.mozgolom112.cameracalibrationapp.R
 import com.mozgolom112.cameracalibrationapp.models.CalibrationData
 import kotlinx.android.synthetic.main.fragment_camera.*
-import androidx.navigation.findNavController
 
 private val CAMERA_PERMISSION_REQUEST = 1
 

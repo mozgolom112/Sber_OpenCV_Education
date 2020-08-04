@@ -22,33 +22,17 @@ class UndistortResultFragment : Fragment(R.layout.fragment_undistort_result){
         super.onViewCreated(view, savedInstanceState)
 
         val arguments = UndistortResultFragmentArgs.fromBundle(requireArguments()).calibrationData
+        camera.calibrationData = arguments
 
         javacamvUndistort.apply {
             visibility = SurfaceView.VISIBLE
             setCvCameraViewListener(camera)
         }
 
-        camera.calibrationData = arguments
-
         requestPermissions(
             arrayOf(Manifest.permission.CAMERA),
             CAMERA_PERMISSION_REQUEST
         )
-    }
-
-    override fun onPause() {
-        super.onPause()
-        javacamvUndistort?.disableView()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        javacamvUndistort?.enableView()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        javacamvUndistort?.disableView()
     }
 
     override fun onRequestPermissionsResult(
@@ -63,7 +47,6 @@ class UndistortResultFragment : Fragment(R.layout.fragment_undistort_result){
                     javacamvUndistort.setCameraPermissionGranted()
                 } else {
                     val message = "Camera permission was not granted"
-                    Log.e("CameraFragment", message)
                     Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show()
                 }
             }
@@ -72,4 +55,20 @@ class UndistortResultFragment : Fragment(R.layout.fragment_undistort_result){
             }
         }
     }
+
+    override fun onPause() {
+        super.onPause()
+        javacamvUndistort.disableView()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        javacamvUndistort.enableView()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        javacamvUndistort.disableView()
+    }
+
 }

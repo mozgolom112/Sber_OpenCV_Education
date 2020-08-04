@@ -27,25 +27,18 @@ class CameraViewModel : CameraBridgeViewBase.CvCameraViewListener2 {
         // get current camera frame as OpenCV Mat object
         val frame = inputFrame.rgba()
 
-        Log.i("onCameraFrame", "Inside")
-        Log.i("onCameraFrame", "${frame.size().height} - высота ${frame.size().width} - ширина")
         if (!isSizesSet) {
             //Set necessary sizes. We need in frame, so we do it in this method
-            Log.i("onCameraFrame", "SetSizes")
-
-            //TODO('Как лучше передать сразу Size и потом reinterpret_cast делать или сделать это в c++?')
             setSizes(
                 chessboardHorizontalAmount,
                 chessboardVerticalAmount,
                 frame.nativeObjAddr,
                 squareSize
             )
-            Log.i("onCameraFrame", "Were set")
             isSizesSet = true
         }
-        Log.i("onCameraFrame", "identifyChessboard")
         amountOfSnapshots.postValue(identifyChessboard(frame.nativeObjAddr, takeSnapshotClick))
-        Log.i("onCameraFrame", "identifiedChessboard")
+
         takeSnapshotClick = false
 
         return frame
@@ -57,9 +50,12 @@ class CameraViewModel : CameraBridgeViewBase.CvCameraViewListener2 {
 
         calibrate(matrixMat.nativeObjAddr, distMat.nativeObjAddr)
 
-        Log.i("Calibration", "${matrixMat.dump()}  || ${distMat.dump()}")
-
-        return CalibrationData(matrixMat.nativeObjAddr, distMat.nativeObjAddr, matrixMat.dump(), distMat.dump())
+        return CalibrationData(
+            matrixMat.nativeObjAddr,
+            distMat.nativeObjAddr,
+            matrixMat.dump(),
+            distMat.dump()
+        )
     }
 
     private external fun calibrate(matrixMatAddr: Long, distMatAddr: Long)
@@ -67,10 +63,8 @@ class CameraViewModel : CameraBridgeViewBase.CvCameraViewListener2 {
     private external fun identifyChessboard(frameAddr: Long, takeSnapshotClick: Boolean): Int
 
     private external fun setSizes(
-        chessboardHorizontalAmount: Int,
-        chessboardVerticalAmount: Int,
-        imageAddr: Long,
-        squareSize: Int
+        chessboardHorizontalAmount: Int, chessboardVerticalAmount: Int,
+        imageAddr: Long, squareSize: Int
     )
 
 }

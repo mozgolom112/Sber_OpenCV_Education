@@ -15,11 +15,13 @@ class CalibrationResultFragment : Fragment(R.layout.fragment_calibration_result)
         super.onViewCreated(view, savedInstanceState)
         calibrationData = CalibrationResultFragmentArgs.fromBundle(requireArguments()).calibrationData
 
-    //TODO('Refactor code')
+        setTextView()
+        setOnClickListeners()
+    }
+
+    private fun setTextView() {
         txtvCameraMatrix.text = calibrationData.CameraMatDump
         txtvDistMatrix.text = calibrationData.DistMatDump
-
-        setOnClickListeners()
     }
 
     private fun setOnClickListeners() {
