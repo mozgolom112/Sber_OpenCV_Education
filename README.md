@@ -174,7 +174,8 @@ An example when many screenshots are taken:
 
 # *From Russia With Love*
 
-<iframe frameborder="0" style="border:none;width:100%;height:100px;" width="100%" height="100" src="https://music.yandex.ru/iframe/#track/38844178/168816">Слушайте <a href='https://music.yandex.ru/album/168816/track/38844178'>Англо-русский словарь</a> — <a href='https://music.yandex.ru/artist/161243'>Сплин</a> на Яндекс.Музыке</iframe>
+[Давай лама, давай, давай открывай
+ Свой англо-русский словарь....](https://music.yandex.ru/album/168816/track/38844178)
 
 # Андроид приложение для калибровки камеры
 Это приложение предназначено для калибровки основной камеры телефона по шахматной доске. Оно позволяет:
