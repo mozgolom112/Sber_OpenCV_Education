@@ -170,3 +170,5 @@ An example when many screenshots are taken:
 ![undistort_pict1_real_good.png](https://raw.githubusercontent.com/mozgolom112/Sber_OpenCV_Education/exercise-1-cam-calibration/readme_media/undistort_pict1_real_good.png)
 
 ![undistort_pict2_real_good.png](https://raw.githubusercontent.com/mozgolom112/Sber_OpenCV_Education/exercise-1-cam-calibration/readme_media/undistort_pict2_real_good.png)
+
+<img src="https://raw.githubusercontent.com/mozgolom112/Sber_OpenCV_Education/exercise-1-cam-calibration/readme_media/detection_chessboard_pict1.png" width="400" height="790">
