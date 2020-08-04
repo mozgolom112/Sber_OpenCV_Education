@@ -22,5 +22,17 @@
         <argument
             android:name="calibrationData"
             app:argType="com.mozgolom112.cameracalibrationapp.models.CalibrationData" />
+        <action
+            android:id="@+id/action_calibrationResult_to_undistortResultFragment"
+            app:destination="@id/undistortResultFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/undistortResultFragment"
+        android:name="com.mozgolom112.cameracalibrationapp.screenundistort.UndistortResultFragment"
+        android:label="fragment_undistort_result"
+        tools:layout="@layout/fragment_undistort_result" >
+        <argument
+            android:name="calibrationData"
+            app:argType="com.mozgolom112.cameracalibrationapp.models.CalibrationData" />
     </fragment>
 </navigation>

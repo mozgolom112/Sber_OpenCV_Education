@@ -67,4 +67,13 @@ Java_com_mozgolom112_cameracalibrationapp_screencamera_CameraViewModel_calibrate
     vector<Mat> result = cameraCalibration.calibrate();
     matrix = result[0];
     dist = result[1];
+}extern "C"
+JNIEXPORT void JNICALL
+Java_com_mozgolom112_cameracalibrationapp_screenundistort_UndistortCameraViewModel_undistort(
+        JNIEnv *env, jobject thiz, jlong frame_addr, jlong matrix_addr, jlong dist_addr) {
+    Mat &frame = *(Mat *) frame_addr;
+    Mat &matrix = *(Mat *) matrix_addr;
+    Mat &dist = *(Mat *) dist_addr;
+
+    cameraCalibration.undistortImage(frame, matrix, dist);
 }

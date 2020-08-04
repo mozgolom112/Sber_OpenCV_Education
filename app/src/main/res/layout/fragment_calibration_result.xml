@@ -29,6 +29,7 @@
         tools:text="DistMat"/>
 
         <Button
+            android:id="@+id/btnShowUndistortImage"
             android:layout_width="@dimen/btn_width"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/txtvDistMatrix"
