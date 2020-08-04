@@ -9,8 +9,8 @@ import org.opencv.core.Mat
 class CameraViewModel : CameraBridgeViewBase.CvCameraViewListener2 {
 
     companion object {
-        private const val chessboardVerticalAmount = 7
-        private const val chessboardHorizontalAmount = 11
+        private const val chessboardVerticalAmount = 5
+        private const val chessboardHorizontalAmount = 9
         private const val squareSize = 50
     }
 
