@@ -140,34 +140,33 @@ The tutorial is written [here](https://heartbeat.fritz.ai/working-with-the-openc
 ###  Virtual Device Pixel 3:
 Detection of chessboard’s angles:
 
-![detection_chessboard_pict1.png](https://raw.githubusercontent.com/mozgolom112/Sber_OpenCV_Education/exercise-1-cam-calibration/readme_media/detection_chessboard_pict1.png)
+<img src="https://raw.githubusercontent.com/mozgolom112/Sber_OpenCV_Education/exercise-1-cam-calibration/readme_media/detection_chessboard_pict1.png" width="400" height="790">
 
-![detection_chessboard_pict2.png](https://raw.githubusercontent.com/mozgolom112/Sber_OpenCV_Education/exercise-1-cam-calibration/readme_media/detection_chessboard_pict2.png)
-
+<img src="https://raw.githubusercontent.com/mozgolom112/Sber_OpenCV_Education/exercise-1-cam-calibration/readme_media/detection_chessboard_pict2.png" width="400" height="790">
 Intrinsic parameters and distortion coefficients:
 
-![screen_param_pict.png](https://raw.githubusercontent.com/mozgolom112/Sber_OpenCV_Education/exercise-1-cam-calibration/readme_media/screen_param_pict.png)
-
+<img src="https://raw.githubusercontent.com/mozgolom112/Sber_OpenCV_Education/exercise-1-cam-calibration/readme_media/screen_param_pict.png" width="400" height="790">
 Undistort images:
-![undistort_pict1.png](https://raw.githubusercontent.com/mozgolom112/Sber_OpenCV_Education/exercise-1-cam-calibration/readme_media/undistort_pict1.png)
 
-![undistort_pict2.png](https://raw.githubusercontent.com/mozgolom112/Sber_OpenCV_Education/exercise-1-cam-calibration/readme_media/undistort_pict2.png)
+<img src="https://raw.githubusercontent.com/mozgolom112/Sber_OpenCV_Education/exercise-1-cam-calibration/readme_media/undistort_pict1.png" width="400" height="790">
 
+<img src="https://raw.githubusercontent.com/mozgolom112/Sber_OpenCV_Education/exercise-1-cam-calibration/readme_media/undistort_pict2.png" width="400" height="790">
 ### Real Phone HMD Global Nokia 6.1 (API 29):
 Detection of chessboard’s angles:
-![detection_chessboard_pict1_real_phone.png](https://raw.githubusercontent.com/mozgolom112/Sber_OpenCV_Education/exercise-1-cam-calibration/readme_media/detection_chessboard_pict1_real_phone.png)
 
-![detection_chessboard_pict2_real_phone.png](https://raw.githubusercontent.com/mozgolom112/Sber_OpenCV_Education/exercise-1-cam-calibration/readme_media/detection_chessboard_pict2_real_phone.png)
+<img src="https://raw.githubusercontent.com/mozgolom112/Sber_OpenCV_Education/exercise-1-cam-calibration/readme_media/detection_chessboard_pict1_real_phone.png" width="400" height="790">
+
+<img src="https://raw.githubusercontent.com/mozgolom112/Sber_OpenCV_Education/exercise-1-cam-calibration/readme_media/detection_chessboard_pict2_real_phone.png" width="400" height="790">
 Intrinsic parameters and distortion coefficients:
 
-![screen_param_pict_real_phone.png](https://raw.githubusercontent.com/mozgolom112/Sber_OpenCV_Education/exercise-1-cam-calibration/readme_media/screen_param_pict_real_phone.png)
+<img src="https://raw.githubusercontent.com/mozgolom112/Sber_OpenCV_Education/exercise-1-cam-calibration/readme_media/screen_param_pict_real_phone.png" width="400" height="790">
 
 If few screenshots are taken, then there will be defects:
 
-![undistort_pict1_real_bad.png](https://raw.githubusercontent.com/mozgolom112/Sber_OpenCV_Education/exercise-1-cam-calibration/readme_media/undistort_pict1_real_bad.png)
+<img src="https://raw.githubusercontent.com/mozgolom112/Sber_OpenCV_Education/exercise-1-cam-calibration/readme_media/undistort_pict1_real_bad.png" width="400" height="790">
 
 An example when many screenshots are taken:
-![undistort_pict1_real_good.png](https://raw.githubusercontent.com/mozgolom112/Sber_OpenCV_Education/exercise-1-cam-calibration/readme_media/undistort_pict1_real_good.png)
 
-![undistort_pict2_real_good.png](https://raw.githubusercontent.com/mozgolom112/Sber_OpenCV_Education/exercise-1-cam-calibration/readme_media/undistort_pict2_real_good.png)
-<img src="https://raw.githubusercontent.com/mozgolom112/Sber_OpenCV_Education/exercise-1-cam-calibration/readme_media/detection_chessboard_pict1.png" width="400" height="790">
+<img src="https://https://raw.githubusercontent.com/mozgolom112/Sber_OpenCV_Education/exercise-1-cam-calibration/readme_media/undistort_pict1_real_good.png" width="400" height="790">
+
+<img src="https://raw.githubusercontent.com/mozgolom112/Sber_OpenCV_Education/exercise-1-cam-calibration/readme_media/undistort_pict2_real_good.png" width="400" height="790">
