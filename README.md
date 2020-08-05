@@ -308,8 +308,10 @@ Java_com_mozgolom112_cameracalibrationapp_screenundistort_UndistortCameraViewMod
 Описание действий прописаны [здесь](https://heartbeat.fritz.ai/working-with-the-opencv-camera-for-android-rotating-orienting-and-scaling-c7006c3e1916)
 
 # Результаты
-Виртуальное устройство Pixel 3:
+### Виртуальное устройство Pixel 3:
+
 Определение углов:
+
 <img src="https://raw.githubusercontent.com/mozgolom112/Sber_OpenCV_Education/exercise-1-cam-calibration/readme_media/detection_chessboard_pict1.png" width="400" height="790">
 
 <img src="https://raw.githubusercontent.com/mozgolom112/Sber_OpenCV_Education/exercise-1-cam-calibration/readme_media/detection_chessboard_pict2.png" width="400" height="790">
@@ -321,7 +323,9 @@ Java_com_mozgolom112_cameracalibrationapp_screenundistort_UndistortCameraViewMod
 <img src="https://raw.githubusercontent.com/mozgolom112/Sber_OpenCV_Education/exercise-1-cam-calibration/readme_media/undistort_pict1.png" width="400" height="790">
 
 <img src="https://raw.githubusercontent.com/mozgolom112/Sber_OpenCV_Education/exercise-1-cam-calibration/readme_media/undistort_pict2.png" width="400" height="790">
-### Real Phone HMD Global Nokia 6.1 (API 29):
+
+### Реальный телефон HMD Global Nokia 6.1 (API 29):
+
 Определение углов:
 
 <img src="https://raw.githubusercontent.com/mozgolom112/Sber_OpenCV_Education/exercise-1-cam-calibration/readme_media/detection_chessboard_pict1_real_phone.png" width="400" height="790">
