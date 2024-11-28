@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/camera">
+
+    <fragment
+        android:id="@+id/camera"
+        android:name="com.mozgolom112.cameracalibrationapp.screencamera.CameraFragment"
+        android:label="fragment_camera"
+        tools:layout="@layout/fragment_camera" >
+        <action
+            android:id="@+id/action_camera_to_calibrationResult"
+            app:destination="@id/calibrationResult" />
+    </fragment>
+    <fragment
+        android:id="@+id/calibrationResult"
+        android:name="com.mozgolom112.cameracalibrationapp.screenresult.CalibrationResultFragment"
+        android:label="fragment_calibration_result"
+        tools:layout="@layout/fragment_calibration_result" >
+        <argument
+            android:name="calibrationData"
+            app:argType="com.mozgolom112.cameracalibrationapp.models.CalibrationData" />
+        <action
+            android:id="@+id/action_calibrationResult_to_undistortResultFragment"
+            app:destination="@id/undistortResultFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/undistortResultFragment"
+        android:name="com.mozgolom112.cameracalibrationapp.screenundistort.UndistortResultFragment"
+        android:label="fragment_undistort_result"
+        tools:layout="@layout/fragment_undistort_result" >
+        <argument
+            android:name="calibrationData"
+            app:argType="com.mozgolom112.cameracalibrationapp.models.CalibrationData" />
+    </fragment>
+</navigation>
